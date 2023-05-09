@@ -1,0 +1,26 @@
+<?php
+require "vendor/autoload.php";
+
+
+use MyApp\System\Commands\Commands;
+
+
+try {
+
+    if(strpos($argv[1], '--') !== false) {
+        $class = ucfirst(str_replace("--", "", $argv[1]));
+        $command = new Commands();
+        echo $command->command($class)->execute();
+    } else {
+        $class = ucfirst(str_replace("--", "", $argv[1]));
+        $command = new Commands();
+        $params = array_slice($argv, 3);
+        if(!isset($argv[2])) {
+            throw new Exception('Comando errado, use: php artisan <comando> help.');
+        }
+        echo $command->method($argv[2])->params($params)->command($class)->execute();
+    }
+} catch(Exception $e) {
+    echo $e->getMessage();
+}
+

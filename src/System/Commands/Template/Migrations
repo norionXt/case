@@ -1,0 +1,14 @@
+<?php
+
+namespace MyApp\Migrations;
+
+use MyApp\System\Interfaces\IMigrations;
+use MyApp\System\Interfaces\ITable;
+
+class NameClass implements IMigrations{
+
+    public function up(ITable $table): ITable {
+
+        return $table;
+    } 
+}

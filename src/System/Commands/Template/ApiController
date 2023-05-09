@@ -1,0 +1,39 @@
+<?php
+
+namespace MyApp\Controller;
+
+use MyApp\System\Interfaces\IRequest;
+use MyApp\System\Interfaces\IResponse;
+
+class NameClass
+{
+
+    public static function index()
+    {
+        //
+    }
+
+
+    public static function store(IRequest $request, IResponse $response)
+    {
+        //
+    }
+
+
+    public static function show(IRequest $request)
+    {
+        //
+    }
+
+
+    public static function update(IRequest $request, IResponse $response)
+    {
+        //
+    }
+
+
+    public static function destroy(IRequest $request)
+    {
+        //
+    }
+}
