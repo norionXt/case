@@ -143,14 +143,7 @@ métodos
 diretório **test** fica os arquivos para serem executados com phpunit.
 
 No terminal use **php artisan test start**.
-## Instalação
 
-Para a instalação
-
-```bash
-  composer install
-  
-```
     
 ## Rodando localmente
 
