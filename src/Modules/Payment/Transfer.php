@@ -24,12 +24,7 @@ class Transfer {
 
         try {
 
-            $moneyRegex = '/^\d+(\.\d{1,2})?$/';
-            $this->valueInvalid($record['value'], $moneyRegex, 'Valor de transferência é inválido');
-            
-            $onlyNumber = '/^[0-9]+$/';
-            $this->valueInvalid($record['payer'], $onlyNumber, 'id está errada');
-            $this->valueInvalid($record['payee'], $onlyNumber, 'id está errada');
+            $this->validateRequestValues($record);
 
             $this->lackOfData($record);
 
@@ -51,21 +46,18 @@ class Transfer {
             if($this->transferAuthorized()) {
                 $result  = $this->executeTransfer($record);
 
-                (new Notify(
-                    new Fetch()
-                ))->send(['id' => $payee['id']]);
-
-                return $this->response->status(200)->sendJson(
-                    [
-                        'message' => $result['Resultado']
-                    ]
-                );
+                if($result['Resultado'] === 'Transação efetivada com sucesso.') {
+                    (new Notify(
+                        new Fetch()
+                    ))->send(['id' => $payee['id']]);
+                }
+                
 
             } else {
                 throw new Exception('Tranferência não autorizada');
             }
         }catch(Exception $e) {
-            $this->response->status(400)->sendJson(['message' => $e->getMessage()]);
+            return throw new Exception($e->getMessage());
         }
 
         
@@ -76,6 +68,20 @@ class Transfer {
         if( !$record['value'] or !$record['payer'] or !$record['payee']) {
             return throw new Exception( 'Revise os dados da requisição');
         }
+    }
+
+    private function validateRequestValues(array $record) {
+        try {
+            $moneyRegex = '/^\d+(\.\d{1,2})?$/';
+            $this->valueInvalid($record['value'], $moneyRegex, 'Valor de transferência é inválido');
+
+            $onlyNumber = '/^[0-9]+$/';
+            $this->valueInvalid($record['payer'], $onlyNumber, 'id está errada');
+            $this->valueInvalid($record['payee'], $onlyNumber, 'id está errada');
+        } catch(Exception $e) {
+            return throw new Exception($e->getMessage());
+        }
+
     }
 
     private function transferAuthorized() {

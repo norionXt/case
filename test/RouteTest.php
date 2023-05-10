@@ -36,10 +36,10 @@ class RouteTest extends TestCase{
         $route = new Route($this->config);
         $host =  (new Config())->get('HOST');
         $paths = [
-            "{id}/{casa}/params" => '/2/apt/params',
-            "params/teste/{id}" => '/params/teste/25',
-            "params/{id}/teste" => '/params/50/teste',
-            "params/{id}/teste/{valor}" => '/params/50/teste/outrovalor',
+            "/{id}/{casa}/params" => '/2/apt/params',
+            "/params/teste/{id}" => '/params/teste/25',
+            "/params/{id}/teste" => '/params/50/teste',
+            "/params/{id}/teste/{valor}" => '/params/50/teste/outrovalor',
         ];
 
         $verbsHttp = ['get','post','put','delete'];

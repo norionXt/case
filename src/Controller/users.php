@@ -2,6 +2,7 @@
 
 namespace MyApp\Controller;
 
+use Exception;
 use MyApp\Model\Usuarios;
 use MyApp\Modules\Payment\Transfer;
 use MyApp\Modules\User\Register;
@@ -32,12 +33,21 @@ class users
     public static function transfer(IRequest $request, IResponse $response)
     {
         $transfer = new Transfer($response, new Usuarios());
+        try {
+            $transfer->execute([
+                'payer' => $request->input('payer'),
+                'payee' => $request->input('payee'),
+                'value' => $request->input('value'),
+            ]);
+            $response->status(200)->sendJson(
+                [
+                    'message' => 'Transferência realizada com sucesso'
+                ]
+            );
+        } catch(Exception $e) {
+            $response->status(400)->sendJson(['message' => $e->getMessage()]);
+        }
 
-        $transfer->execute([
-            'payer' => $request->input('payer'),
-            'payee' => $request->input('payee'),
-            'value' => $request->input('value'),
-        ]);
     }
 
 }
