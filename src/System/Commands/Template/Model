@@ -1,0 +1,10 @@
+<?php
+
+namespace MyApp\Model;
+
+use MyApp\System\Modules\Model\Model;
+
+class NameClass extends Model  {
+
+
+}

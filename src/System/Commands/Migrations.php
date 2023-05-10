@@ -30,7 +30,7 @@ class Migrations implements  ICommands {
 
 
     function up() {
-        $path = dirname(__DIR__,2)."\Migrations";
+        $path = dirname(__DIR__,2)."/Migrations";
         $database = $this->getDatabase();
         foreach ($this->getClass($path) as $file) {
             $class = "MyApp\\Migrations\\{$file}";

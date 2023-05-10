@@ -1,13 +1,15 @@
 <?php
 
-use MyApp\Modal\Usuarios;
+use MyApp\Model\Payment;
+use MyApp\Model\Usuarios;
 use MyApp\System\Interfaces\IDB;
 use MyApp\System\Modules\Config\Config;
 use MyApp\System\Modules\Databases\Mysql;
-use MyApp\System\Modules\Modal\Query;
+use MyApp\System\Modules\Fetch\Fetch;
+use MyApp\System\Modules\Model\Query;
 use PHPUnit\Framework\TestCase;
 
-final class ModalTest extends TestCase{
+final class ModelTest extends TestCase{
 
     private IDB $connectDatabase;
  
@@ -17,20 +19,10 @@ final class ModalTest extends TestCase{
         $this->connectDatabase = new Mysql($config);
     }
  
-    function QueryInsert() {
-
-
-        $modal = new Usuarios($this->connectDatabase, new Query());
-        $user = [
-            'nomeCompleto' => 'fernando',
-            'email' => 'fernando@gmail.com',
-            'cpf'   => '777.777.77-25',
-            'senha' => '4651261'
-
-        ];
-
-        $modal->insert($user);
-
+    function testQueryInsert() {
+        $pay = new Payment();
+      $res =  $pay->transfer(56,6,15);
+      echo var_dump($res);
     }
 
 
@@ -40,10 +32,15 @@ final class ModalTest extends TestCase{
     function testQueryWhereSelect() {
 
 
-        $modal = new Usuarios($this->connectDatabase, new Query());
+        $Model = new Usuarios($this->connectDatabase, new Query());
 
-        echo var_dump($modal->where('id','=','1')->select(['nomeCompleto']));
+        echo var_dump($Model->where('id','=','1')->select(['nomeCompleto']));
 
     }
 
+
+    function testFetch() {
+
+
+    }
 }

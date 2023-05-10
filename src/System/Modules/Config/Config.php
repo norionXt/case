@@ -12,7 +12,7 @@ class Config implements IConfig{
         if($this->get('HOST')) {
             return;
         }
-        $this->loadConfig(dirname(__FILE__,5).'\.env');
+        $this->loadConfig(dirname(__FILE__,5).'/.env');
     }
 
     private function loadConfig(string $pathFile) {

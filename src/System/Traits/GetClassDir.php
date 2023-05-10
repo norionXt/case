@@ -4,7 +4,7 @@ namespace MyApp\System\Traits;
 
 
 trait GetClassDir {
-    function getClass($dir, ): array {
+    function getClass($dir ): array {
         $files = scandir($dir);
 
         $listClass = array_filter( $files, function ($file) {

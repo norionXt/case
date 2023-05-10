@@ -13,6 +13,7 @@ $config = new Config();
 $route = new Route($config);
 Web::loadRoutes();
 
+
 if($route->existUrl($request->url(), $request->method())) {
     $route->action($request->url(), $request->method());
 } else {

@@ -72,19 +72,25 @@ if (preg_match($regex, $url)) {
 
 
 */
-/*
+
+
+
 $url = 'localhost/{casa}/{id}';
+$pathArray = explode('/','localhost/apartamento/1');
 $arrayUrl = explode('/', $url);
-$arrayUrlPrepared =  array_map(function($value) {
-    if( strpos('}',$value) ) {
-        return '\/\w+';
+$arrayUrlPrepared = [];
+foreach ($arrayUrl as $index => $value) {
+
+    if( strpos($value, '}') !== false ) {
+        $value = str_replace('{','',$value);
+        $value = str_replace('}', '', $value);
+        $arrayUrlPrepared[$value] = $pathArray[$index];
     }
-    return $value;
-}, $arrayUrl);
+}
 
-echo var_dump($arrayUrlPrepared);*/
+echo var_dump($arrayUrlPrepared);
 
-
+/*
 
         $config = new Config();
         $url = "{$config->get('url')}/{id}/{casa}/params";
@@ -203,4 +209,4 @@ class Route {
 
 
     }
-}
+}*/

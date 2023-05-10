@@ -1,6 +1,6 @@
 <?php
 
-use MyApp\System\Modules\Modal\Query;
+use MyApp\System\Modules\Model\Query;
 use PHPUnit\Framework\TestCase;
 
 final class QueryTest extends TestCase{

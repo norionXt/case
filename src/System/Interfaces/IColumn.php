@@ -9,6 +9,5 @@ interface IColumn {
     public function decimal(string $column);
     public function string(string $column);
     public function notNull();
-    public function timestamps();
     public function query();
 }

@@ -18,11 +18,7 @@ class Column implements IColumn {
         return $this;        
     }
 
-    public function timestamps() {
-        array_push($this->attributes, " date_created timestamp, ");
-        array_push($this->attributes, " date_updated timestamp ");
-        return $this;        
-    }
+
 
 
     public function string(string $column){

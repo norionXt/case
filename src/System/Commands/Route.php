@@ -3,6 +3,7 @@ namespace MyApp\System\Commands;
 
 use MyApp\Routers\Web;
 use MyApp\System\Interfaces\ICommands;
+use MyApp\System\Modules\Config\Config;
 use MyApp\System\Modules\Route\Route as RouteRoute;
 use MyApp\System\Traits\Menssage;
 
@@ -24,12 +25,13 @@ class Route implements ICommands {
         $listRoutes = [];
         $report = '';
         Web::loadRoutes();
+        $config = new Config();
         foreach (RouteRoute::list() as $verb => $listRoutes) {
             foreach ($listRoutes as $route) {
                 $verb = strtoupper($verb);
                 $controller = $route['controllerAndMethod'][0];
                 $method = $route['controllerAndMethod'][1];                
-                $report .= "\n!{{$verb}}!  {$route['url']} ....................... {$controller}:{$method}";
+                $report .= "\n!{{$verb}}!  {$config->get('HOST')}{$route['url']} ....................... {$controller}:{$method}";
             }
         }
         echo $this->addTextInGreen($report);

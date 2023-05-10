@@ -7,5 +7,6 @@ interface IQuery {
     public function insert(array $columns);    
     public function table( string $table);
     public function update(array $columns);
+    public function clear();
     public function where(string $column,string $condition, string $segCondition ='');
 }
