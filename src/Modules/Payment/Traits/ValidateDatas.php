@@ -39,7 +39,7 @@ trait ValidateDatas {
         return $service->isAuthorized();
     }
 
-    private function notCanTransfer($saldo, $value)
+    private function enoughMoney($saldo, $value)
     {
         if (intval($saldo) < intval($value)) {
             return throw new Exception('Saldo insuficiente');
