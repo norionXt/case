@@ -4,7 +4,6 @@
 namespace MyApp\Modules\User;
 
 use Exception;
-use MyApp\System\Interfaces\IConfig;
 use MyApp\System\Interfaces\IModel;
 use MyApp\System\Interfaces\IResponse;
 
@@ -55,7 +54,7 @@ class Register {
 
     private function dadosInvalid(array $dados){
         if (in_array(false, $dados) ) {
-            return throw new Exception("Error Processing Request");
+            return throw new Exception("Existe dados inválidos");
         }
     }
 

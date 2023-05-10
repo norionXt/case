@@ -1,6 +1,9 @@
 <?php
 
 namespace MyApp\Services;
+
+use Exception;
+use MyApp\Model\Jobs;
 use MyApp\System\Interfaces\IFetch;
 
 class Notify {
@@ -14,7 +17,12 @@ class Notify {
     }
 
     function send(array $data){
-        $result  = $this->fetch->post(Moncky::URL, $data, [ 'header' => 'Content-Type: application/x-www-form-urlencoded',]);
-        return $result->message === "Autorizado";
+        try {
+            $result  = $this->fetch->get(Moncky::URL);
+            return $result->message === "Success";
+        } catch(Exception $e) {
+            (new Jobs())->insert(['class' => serialize($this), 'method' =>'send', 'params' => implode('|', $data)]);
+        }
+
     }
 }

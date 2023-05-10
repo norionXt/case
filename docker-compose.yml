@@ -31,6 +31,7 @@ services:
 
   db:
     image: mysql:5.7
+    container_name: case_mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_DATABASE: myapp

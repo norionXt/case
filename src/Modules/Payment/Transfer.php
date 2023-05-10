@@ -36,17 +36,16 @@ class Transfer {
                 throw new Exception('Lojista não pode fazer pagamentos');
             }
 
-            if( $this->notCanTransfer($payer['saldo'], $record['value']) ) {
-                throw new Exception('Saldo insuficiente');
-            }
+            $this->notCanTransfer($payer['saldo'], $record['value']);
 
+            $this->valueInvalid($record['value']);
 
             if($this->transferAuthorized()) {
                 $result  = $this->executeTransfer($record);
 
                 (new Notify(
                     new Fetch()
-                ))->send($result);
+                ))->send(['id' => $payee['id']]);
 
                 return $this->response->status(200)->sendJson(
                     [
@@ -80,13 +79,22 @@ class Transfer {
     }
 
     private function notCanTransfer($saldo, $value) {
-        return intval($saldo) < intval($value);
+        if(  intval($saldo) < intval($value) ) {
+            return throw new Exception('Saldo insuficiente');
+        }
     }
 
     private function executeTransfer(array $record) {
         $result  = (new Payment())
         ->transfer($record['payer'], $record['payee'], $record['value']);
         return $result;
+    }
+
+
+    private function valueInvalid($value) {
+         if (!preg_match('/^\d+(\.\d{1,2})?$/', $value)) {
+            return throw new Exception("Valor para transferência é inválido");
+        }
     }
 
 }
