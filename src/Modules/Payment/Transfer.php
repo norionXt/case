@@ -41,7 +41,7 @@ use ValidateDatas;
                 throw new Exception('Lojistas não podem fazer pagamentos');
             }
 
-            $this->notCanTransfer($payer['saldo'], $record['value']);
+            $this->enoughMoney($payer['saldo'], $record['value']);
 
             if($this->transferAuthorized()) {
                 $result  = $this->executeTransfer($record);
