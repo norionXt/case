@@ -34,12 +34,12 @@ class RouteTest extends TestCase{
 
     function testRouteExist() {
         $route = new Route($this->config);
-
+        $host =  (new Config())->get('HOST');
         $paths = [
-            "{id}/{casa}/params" => '2/apt/params',
-            "params/teste/{id}" => 'params/teste/25',
-            "params/{id}/teste" => 'params/50/teste',
-            "params/{id}/teste/{valor}" => 'params/50/teste/outrovalor',
+            "{id}/{casa}/params" => '/2/apt/params',
+            "params/teste/{id}" => '/params/teste/25',
+            "params/{id}/teste" => '/params/50/teste',
+            "params/{id}/teste/{valor}" => '/params/50/teste/outrovalor',
         ];
 
         $verbsHttp = ['get','post','put','delete'];
@@ -47,7 +47,10 @@ class RouteTest extends TestCase{
         foreach ($verbsHttp as $verb) {
             foreach ($paths as $routeController => $routeRequest) {
                 $route::{$verb}($routeController,[]);
-                $result = $route->existUrl($routeRequest, $verb);
+                $result = $route->existUrl($host.$routeRequest, strtoupper($verb));
+                if(!$result) {
+                    echo $verb;
+                }
                 $this->assertTrue($result);
             }
         }      

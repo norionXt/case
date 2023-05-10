@@ -2,13 +2,11 @@
 
 namespace MyApp\Controller;
 
-use MyApp\Modal\Usuarios as ModalUsuarios;
 use MyApp\Model\Usuarios;
 use MyApp\Modules\Payment\Transfer;
 use MyApp\Modules\User\Register;
 use MyApp\System\Interfaces\IRequest;
 use MyApp\System\Interfaces\IResponse;
-use MyApp\System\Modules\Config\Config;
 
 class users
 {

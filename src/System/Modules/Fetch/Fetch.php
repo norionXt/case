@@ -13,7 +13,7 @@ class Fetch implements IFetch{
         $curl = curl_init();
 
         // Configura as opções do cURL
-        curl_setopt($curl, CURLOPT_URL, "https://exemplo.com/servico");
+        curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         // Executa a requisição
@@ -21,7 +21,7 @@ class Fetch implements IFetch{
 
         // Verifica se houve algum erro durante a requisição
         if (curl_errno($curl)) {
-            throw new Exception('Erro ao buscar serviço remoto: ' . curl_error($curl));
+           return throw new Exception('Erro ao buscar serviço remoto: ' . curl_error($curl));
         }
 
         // Fecha o cURL

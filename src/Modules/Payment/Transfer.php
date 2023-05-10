@@ -23,6 +23,14 @@ class Transfer {
     function execute(array $record) {
 
         try {
+
+            $moneyRegex = '/^\d+(\.\d{1,2})?$/';
+            $this->valueInvalid($record['value'], $moneyRegex, 'Valor de transferência é inválido');
+            
+            $onlyNumber = '/^[0-9]+$/';
+            $this->valueInvalid($record['payer'], $onlyNumber, 'id está errada');
+            $this->valueInvalid($record['payee'], $onlyNumber, 'id está errada');
+
             $this->lackOfData($record);
 
             $payer = $this->user->getUserId($record['payer']);
@@ -38,7 +46,7 @@ class Transfer {
 
             $this->notCanTransfer($payer['saldo'], $record['value']);
 
-            $this->valueInvalid($record['value']);
+
 
             if($this->transferAuthorized()) {
                 $result  = $this->executeTransfer($record);
@@ -91,9 +99,9 @@ class Transfer {
     }
 
 
-    private function valueInvalid($value) {
-         if (!preg_match('/^\d+(\.\d{1,2})?$/', $value)) {
-            return throw new Exception("Valor para transferência é inválido");
+    private function valueInvalid($value, $regex, $message) {
+         if (!preg_match($regex, $value)) {
+            return throw new Exception($message);
         }
     }
 

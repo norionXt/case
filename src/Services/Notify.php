@@ -3,7 +3,6 @@
 namespace MyApp\Services;
 
 use Exception;
-use MyApp\Model\Jobs;
 use MyApp\System\Interfaces\IFetch;
 
 class Notify {
@@ -17,12 +16,9 @@ class Notify {
     }
 
     function send(array $data){
-        try {
-            $result  = $this->fetch->get(Moncky::URL);
-            return $result->message === "Success";
-        } catch(Exception $e) {
-            (new Jobs())->insert(['class' => serialize($this), 'method' =>'send', 'params' => implode('|', $data)]);
+        $result  = $this->fetch->get(Moncky::URL);
+        if  ($result->message !== "Success") {
+            return throw new Exception("Serviço de notificação está indisponível no momento");
         }
-
     }
 }
