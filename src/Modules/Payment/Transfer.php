@@ -38,7 +38,7 @@ use ValidateDatas;
             }
 
             if( $this->user->isStore($payer) ) {
-                throw new Exception('Lojista não pode fazer pagamentos');
+                throw new Exception('Lojistas não podem fazer pagamentos');
             }
 
             $this->notCanTransfer($payer['saldo'], $record['value']);
