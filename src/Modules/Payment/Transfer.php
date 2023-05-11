@@ -20,7 +20,7 @@ use ValidateDatas;
     }
 
     function execute(array $record) {
-
+        $config   = new Config(); 
         try {
 
             $this->validateRequestValues($record);
@@ -41,10 +41,10 @@ use ValidateDatas;
             $this->enoughMoney($payer['saldo'], $record['value']);
 
             if($this->transferAuthorized()) {
-                $result  = $this->executeTransfer($record);
+                $this->executeTransfer($record);
 
-                $notifyOK =  $this->ifTransferSuccessNotify($result, $payee['id']);
-                $config   = new Config(); 
+                $notifyOK =  $this->ifTransferSuccessNotify($payee['id']);
+               
                 if($notifyOK) {
 
                     return ["message"=>"Transferência feita com sucesso mas notificação está indisponível.",
@@ -58,7 +58,7 @@ use ValidateDatas;
                 throw new Exception('Tranferência não autorizada');
             }
         }catch(Exception $e) {
-            return throw new Exception($e->getMessage());
+            return ["status" =>$config->get('ERROR'), 'message' => $e->getMessage()];
         }        
 
     }

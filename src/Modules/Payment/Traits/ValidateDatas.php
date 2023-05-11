@@ -51,7 +51,10 @@ trait ValidateDatas {
     {
         $result  = (new Payment())
             ->transfer($record['payer'], $record['payee'], $record['value']);
-        return $result;
+         
+        if($result['Resultado'] == 'Erro na transação') {
+            return throw new Exception($result['Resultado']);
+        }
     }
 
 
@@ -63,7 +66,7 @@ trait ValidateDatas {
     }
 
 
-    private function ifTransferSuccessNotify($result, $idPayee) {
+    private function ifTransferSuccessNotify( $idPayee) {
         return (new Notify(
                 new Fetch()
             ))->send(['id' => $idPayee ]);

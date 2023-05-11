@@ -37,19 +37,14 @@ class users
     public static function transfer(IRequest $request, IResponse $response)
     {
         $transfer = new Transfer($response, new ModelUsers());
-        try {
-            $result = $transfer->execute([
-                'payer' => $request->input('payer'),
-                'payee' => $request->input('payee'),
-                'value' => $request->input('value'),
-            ]);
-            $status = intval($result['status']);
-            $response->status($status)->sendJson($result);
-        } catch(Exception $e) {
-            $config = new Config();
-            $status = intval($config->get('ERROR'));
-            $response->status($status)->sendJson(["status"=>$status,'message' => $e->getMessage()]);
-        }
+
+        $result = $transfer->execute([
+            'payer' => $request->input('payer'),
+            'payee' => $request->input('payee'),
+            'value' => $request->input('value'),
+        ]);
+        $status = intval($result['status']);
+        $response->status($status)->sendJson($result);
 
     }
 
