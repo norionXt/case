@@ -2,21 +2,18 @@
 namespace MyApp\Modules\Payment;
 
 use Exception;
-use MyApp\Model\Payment;
 use MyApp\Modules\Payment\Traits\ValidateDatas;
-use MyApp\Services\Moncky;
-use MyApp\Services\Notify;
-use MyApp\System\Interfaces\IUsuarios;
+use MyApp\System\Interfaces\IUsers;
 use MyApp\System\Interfaces\IResponse;
-use MyApp\System\Modules\Fetch\Fetch;
+use MyApp\System\Modules\Config\Config;
 
 class Transfer {
 use ValidateDatas;
 
     private IResponse $response;
-    private IUsuarios    $user;    
+    private IUsers    $user;    
 
-    function __construct(IResponse $response, IUsuarios $user)
+    function __construct(IResponse $response, IUsers $user)
     {
         $this->response = $response;
         $this->user     = $user;        
@@ -46,7 +43,16 @@ use ValidateDatas;
             if($this->transferAuthorized()) {
                 $result  = $this->executeTransfer($record);
 
-                return $this->ifTransferSuccessNotify($result, $payee['id']);
+                $notifyOK =  $this->ifTransferSuccessNotify($result, $payee['id']);
+                $config   = new Config(); 
+                if($notifyOK) {
+
+                    return ["message"=>"Transferência feita com sucesso mas notificação está indisponível.",
+                        "status"=>$config->get('SUCCESS')];
+                } else {
+                    return ["message"=>"Transferência feita com sucesso mas notificação está indisponível.",
+                    "status" => $config->get('SUCCESS_ERRO_THIRD')];
+                }
 
             } else {
                 throw new Exception('Tranferência não autorizada');

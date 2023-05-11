@@ -1,7 +1,7 @@
 CREATE DATABASE if not exists myapp;
 
 
-create table IF NOT EXISTS Usuarios  ( 
+create table IF NOT EXISTS Users  ( 
     id bigint unsigned auto_increment primary key ,
     nomeCompleto varchar(255) not null,
     email varchar(255) not null unique,
@@ -29,8 +29,8 @@ BEGIN
 DECLARE erro_sql TINYINT DEFAULT FALSE;
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro_sql = TRUE;
 START TRANSACTION;
-update Usuarios set saldo = saldo - amount where id = idPayer;
-update Usuarios set saldo = saldo + amount where id = idPayee;
+update Users set saldo = saldo - amount where id = idPayer;
+update Users set saldo = saldo + amount where id = idPayee;
 
   IF erro_sql = FALSE THEN
     COMMIT;

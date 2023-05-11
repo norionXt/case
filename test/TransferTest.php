@@ -1,6 +1,6 @@
 <?php
 
-use MyApp\Model\Usuarios as ModelUsuarios;
+use MyApp\Model\Users as ModelUsers;
 use MyApp\Modules\Payment\Transfer;
 use MyApp\System\Modules\Route\Response;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +14,7 @@ class TransferTest extends TestCase{
     {
 
         try {
-            $result = (new Transfer(new Response(), new ModelUsuarios()))
+            $result = (new Transfer(new Response(), new ModelUsers()))
                 ->execute([
                     "payee" => "4",
                     "payer" => "10a",

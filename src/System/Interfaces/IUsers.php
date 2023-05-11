@@ -4,7 +4,7 @@
 namespace MyApp\System\Interfaces;
 
 
-interface IUsuarios {
+interface IUsers {
     public function isStore(array $user);
     public function getUserId($id);
 }

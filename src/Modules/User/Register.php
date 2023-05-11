@@ -6,6 +6,7 @@ namespace MyApp\Modules\User;
 use Exception;
 use MyApp\System\Interfaces\IModel;
 use MyApp\System\Interfaces\IResponse;
+use MyApp\System\Modules\Config\Config;
 
 class Register {
 
@@ -43,11 +44,9 @@ class Register {
             return $this->responseOk();
         } catch(Exception $e) {
           
-            return $this->response
-                ->status(400)
-                ->sendJson([
+            return [ 'status' => (new Config())->get('ERROR'),
                     'message' => $e->getMessage()
-                ]);
+                ];
         }
     }
 
@@ -72,8 +71,8 @@ class Register {
     }
 
     private function responseOk() {
-        return $this->response
-            ->status(200)
-            ->sendJson(['message' => 'Usuário cadastrado com sucesso']);
+        return [ 
+            'status' => (new Config())->get('SUCCESS'),
+            'message' => 'Usuário cadastrado com sucesso'];
     }
 }

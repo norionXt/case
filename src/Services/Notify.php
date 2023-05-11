@@ -17,8 +17,6 @@ class Notify {
 
     function send(array $data){
         $result  = $this->fetch->get(Moncky::URL);
-        if  ($result->message !== "Success") {
-            return throw new Exception("Serviço de notificação está indisponível no momento");
-        }
+        return $result->message === "Success";
     }
 }

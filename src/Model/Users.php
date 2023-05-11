@@ -3,10 +3,10 @@
 
 namespace MyApp\Model;
 
-use MyApp\System\Interfaces\IUsuarios;
+use MyApp\System\Interfaces\IUsers;
 use MyApp\System\Modules\Model\Model;
 
-class Usuarios extends Model implements IUsuarios {
+class Users extends Model implements IUsers {
 
 
     public function isStore(array $user) {

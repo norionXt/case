@@ -6,6 +6,7 @@ use Exception;
 use MyApp\Model\Payment;
 use MyApp\Services\Moncky;
 use MyApp\Services\Notify;
+use MyApp\System\Interfaces\IResponse;
 use MyApp\System\Modules\Fetch\Fetch;
 
 trait ValidateDatas {
@@ -63,13 +64,9 @@ trait ValidateDatas {
 
 
     private function ifTransferSuccessNotify($result, $idPayee) {
-        if ($result['Resultado'] === 'Transação efetivada com sucesso.') {
-            (new Notify(
+        return (new Notify(
                 new Fetch()
             ))->send(['id' => $idPayee ]);
-            return true;
-        } else {
-            return throw new Exception("Erro na transferência, tente novamente mais tarde");
-        }
     }
+
 }

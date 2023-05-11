@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Copia o arquivo .sql para o diretório do container
-docker cp config/mysql/init.sql case_mysql:/procedure.sql
+docker cp config/mysql/init.sql case_mysql_connect:/procedure.sql
 
 # Executa o conteúdo do arquivo .sql no container
-docker exec -i case_mysql mysql -uroot -p123 myapp < config/mysql/init.sql
+docker exec -i case_mysql_connect mysql -uroot -p123 myapp < config/mysql/init.sql
 
 
 # Adiciona a atividade no cron

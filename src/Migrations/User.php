@@ -5,12 +5,12 @@ namespace MyApp\Migrations;
 use MyApp\System\Interfaces\IMigrations;
 use MyApp\System\Interfaces\ITable;
 
-class usuarios implements IMigrations{
+class Users implements IMigrations{
 
 
     public function up(ITable $table): ITable {
         $table->id();
-        $table->name('Usuarios');
+        $table->name('Users');
         $table->string('nomeCompleto')->notNull();
         $table->string('cpf')->unique();
         $table->string('cnpj');

@@ -19,6 +19,15 @@ Uma breve descrição sobre o que esse projeto faz.
 
 #### Rota de cadastro de usuário
 
+
+As respostas vem com status e message.
+```
+  Code do retorno
+  status 200 => OK, processo foi concluído com sucesso
+  status 205 => Ok, processo principal foi concluído com sucesso mas houve um problema externo
+  status 400 => Houve um erro
+```
+
 ```http
   POST /usuario
 ```
@@ -174,8 +183,6 @@ Inicie o servidor
 Execute script bash para subir o banco de dados e executa cron para executar atividades que não foram concluídas.
 
 Exemplo de servições de terceiros que ficaram indisponível.
-
-Crontab é necessário.
 
 ```bash
   chmod 777 config.sh
